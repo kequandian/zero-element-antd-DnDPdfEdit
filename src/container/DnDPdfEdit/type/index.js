@@ -1,11 +1,11 @@
 import React from 'react';
-import Canvas from '../../DnDFormEdit/type/Canvas';
+import Canvas from './Canvas';
 import Grid from './Grid';
-import LTB from '../../DnDFormEdit/type/LTB';
+import LTB from './LTB';
 
-import Plain from '../../DnDFormEdit/type/Plain';
-import Group from '../../DnDFormEdit/type/Group';
-import Checkbox from '../../DnDFormEdit/type/Checkbox';
+import Plain from './Plain';
+import Group from './Group';
+import Checkbox from './Checkbox';
 import InputUnderline from './InputUnderline';
 import Image from './Image';
 import Qrcode from './Qrcode';

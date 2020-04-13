@@ -1,7 +1,9 @@
 import React from 'react';
-import { Card, Input, Icon } from 'antd';
+import { Card, Input, Icon, Select } from 'antd';
 import Options from './Options';
 import './index.css';
+
+const { Option } = Select;
 
 export default function ItemEdit(props) {
   const {
@@ -13,6 +15,7 @@ export default function ItemEdit(props) {
       value: tValue = '值',
     },
     editId,
+    optionsField = [],
     onClick,
     onChange, onRemove, onOptionsChange,
     onIndexChange,
@@ -27,6 +30,14 @@ export default function ItemEdit(props) {
   }
   function handleMoveDown() {
     onIndexChange('down', index);
+  }
+
+  function handleChange(value) {
+    onChange(index, valueField, {
+      target: {
+        value,
+      }
+    })
   }
 
   return <Card
@@ -65,10 +76,15 @@ export default function ItemEdit(props) {
     <span>{tLabel}: </span>
     <Input value={label} onChange={onChange.bind(null, index, 'label')} />
     <span>{tValue}: </span>
-    <Input
+    <Select
+      style={{ width: 182 }}
       value={props[valueField]}
-      onChange={onChange.bind(null, index, valueField)}
-    />
+      onChange={handleChange}
+    >
+      {optionsField.map(key => {
+        return <Option key={key} value={key}>{key}</Option>
+      })}
+    </Select>
     <Options
       index={index}
       data={options}

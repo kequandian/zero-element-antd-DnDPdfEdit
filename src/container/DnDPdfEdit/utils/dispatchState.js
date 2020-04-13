@@ -3,6 +3,13 @@ import { findNode, findEmptyNode } from './nodeTree';
 import { setInitId } from './Item';
 import { message } from 'antd';
 
+function fotmatValue(value, func, dValue) {
+  if (value) {
+    return func(value);
+  }
+  return dValue;
+}
+
 export default function handleState(state, { type, payload = {} }) {
   const config = { ...state.config };
   const copyList = [...state.copyList];
@@ -14,23 +21,15 @@ export default function handleState(state, { type, payload = {} }) {
       }
     },
     initConfig() {
-      const { name, originConfig, headerField, fields = [] } = payload;
-      let headerFieldData;
-      if (headerField) {
-        headerFieldData = headerField.split(',').map(key => ({
-          label: key,
-          value: key,
-          options: {
-            type: 'plain',
-          },
-        }))
-      }
+      const { name, originConfig, headerField, apiField, apiList } = payload;
+
       return {
         ...state,
         name: name,
-        config: JSON.parse(originConfig),
-        fields: fields.map(f => f.field || f),
-        headerField: headerFieldData,
+        config: originConfig,
+        fields: fotmatValue(apiField, v => v.split(',').map(f => f.field || f), []),  // 可用的普通后端字段, 如 name, sex, address
+        tableFields: fotmatValue(apiList, v => v.split(',').map(f => f.field || f), []),  // 可用的普通后端字段, 如 name, sex, address
+        headerField: fotmatValue(headerField, v => v.split(','), undefined),
       }
     },
     addLayout() {

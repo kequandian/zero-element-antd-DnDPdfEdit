@@ -12,7 +12,7 @@ import Expect from './components/Expect';
 const { Option } = Select;
 
 function renderItemsOptions(items, handle, otherProps = {}) {
-  return <ItemEdit
+  return items && <ItemEdit
     items={items}
     {...handle}
     {...otherProps}
@@ -20,7 +20,7 @@ function renderItemsOptions(items, handle, otherProps = {}) {
 }
 
 function renderFieldsSelect(list, value, handleChange) {
-  return <Select style={{ width: '100%' }}
+  return list && <Select style={{ width: '100%' }}
     value={value}
     onChange={handleChange}
   >
@@ -30,7 +30,7 @@ function renderFieldsSelect(list, value, handleChange) {
   </Select>
 }
 
-export default ({ current, dispatch, fields, API, headerField }) => {
+export default ({ current, dispatch, fields, tableFields, API, headerField }) => {
   const { options = {} } = current;
   const {
     field = {}, base = {}, rules = {}, style,
@@ -39,15 +39,6 @@ export default ({ current, dispatch, fields, API, headerField }) => {
     pdf,
   } = options;
   const { required, ...restRules } = rules;
-  let tableList = table;
-
-  useEffect(_ => {
-    if (headerField && table) {
-      table.splice(0, table.length, ...headerField);
-
-      onSave();
-    }
-  }, [headerField, table])
 
   function onSave() {
     dispatch({
@@ -110,9 +101,9 @@ export default ({ current, dispatch, fields, API, headerField }) => {
   }
 
   function handleTableAdd(pdf) {
-    tableList.push({
-      label: `字段${tableList.length + 1}`,
-      value: `f_${tableList.length + 1}`,
+    table.push({
+      label: `字段${table.length + 1}`,
+      value: undefined,
       options: {
         type: 'plain',
         ...(pdf ? {} : {
@@ -125,19 +116,19 @@ export default ({ current, dispatch, fields, API, headerField }) => {
     onSave();
   }
   function handleTableChange(i, type, e) {
-    tableList[i][type] = e.target.value;
+    table[i][type] = e.target.value;
     onSave();
   }
   function handleTableIndexChange(type, index) {
-    arrayItemMove(tableList, type, index);
+    arrayItemMove(table, type, index);
     onSave();
   }
   function handleTableOptionsChange(i, type, value) {
-    tableList[i].options[type] = value;
+    table[i].options[type] = value;
     onSave();
   }
   function handleTableDel(i) {
-    tableList.splice(i, 1);
+    table.splice(i, 1);
     onSave();
   }
   function handleRulesChange(key, value) {
@@ -179,7 +170,7 @@ export default ({ current, dispatch, fields, API, headerField }) => {
       onChange={handleRulesChange}
     />
     <div className="ZEleA-DnDFormEdit-title">字段值(后端字段)</div>
-    {renderFieldsSelect(fields, field.value, handleFieldChange)}
+    {renderFieldsSelect(isTableFields(options.table, fields, tableFields), field.value, handleFieldChange)}
     {renderBaseOptions(base, handleBaseChange)}
     {Object.keys(restRules).length ? (
       <>
@@ -198,16 +189,11 @@ export default ({ current, dispatch, fields, API, headerField }) => {
     {items ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">子项</div>
-        {headerField ? null : (
-          <>
-            <Button type="dashed" icon="plus"
-              onClick={handleItemAdd}>
-              添加子项
-            </Button>
-            <br /><br />
-          </>
-        )}
-
+        <Button type="dashed" icon="plus"
+          onClick={handleItemAdd}>
+          添加子项
+        </Button>
+        <br /><br />
         {renderItemsOptions(items, {
           onChange: handleItemChange,
           onRemove: handleItemDel,
@@ -241,29 +227,29 @@ export default ({ current, dispatch, fields, API, headerField }) => {
         )}
       </>
     ) : null}
-    {headerField ? null
-      : (
-        <>
-          <div className="ZEleA-DnDFormEdit-title">显示字段</div>
-          <Button type="dashed" icon="plus"
-            onClick={handleTableAdd.bind(null, pdf)}>
-            添加字段
-          </Button>
-        </>
-      )}
-    <br /><br />
-    {renderItemsOptions(tableList,
-      {
-        onChange: handleTableChange,
-        onRemove: handleTableDel,
-        onOptionsChange: handleTableOptionsChange,
-        onOptionsChange: handleTableOptionsChange,
-        onIndexChange: handleTableIndexChange,
-      },
-      {
-        disabled: Boolean(base.path && base.path.value),
-      }
-    )}
+    {table ? (
+      <>
+        <div className="ZEleA-DnDFormEdit-title">显示字段</div>
+        <Button type="dashed" icon="plus"
+          onClick={handleTableAdd.bind(null, pdf)}>
+          添加字段
+        </Button>
+        <br /><br />
+        {renderItemsOptions(table,
+          {
+            onChange: handleTableChange,
+            onRemove: handleTableDel,
+            onOptionsChange: handleTableOptionsChange,
+            onOptionsChange: handleTableOptionsChange,
+            onIndexChange: handleTableIndexChange,
+          },
+          {
+            disabled: Boolean(base.path && base.path.value),
+            headerField,
+          }
+        )}
+      </>
+    ) : null}
     {style ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">样式</div>
@@ -271,4 +257,11 @@ export default ({ current, dispatch, fields, API, headerField }) => {
       </>
     ) : null}
   </Drawer>
+}
+
+function isTableFields(bol, fields, tableFields) {
+  if (bol) {
+    return tableFields;
+  }
+  return fields;
 }

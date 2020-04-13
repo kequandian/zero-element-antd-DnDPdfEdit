@@ -151,12 +151,12 @@ export default [
       expect: {},
       pdf: true,
       table: [
-        {
-          label: '名称', value: 'name',
-          options: {
-            type: 'plain', // plain input number date ...
-          }
-        },
+        // {
+        //   label: '名称', value: 'name',
+        //   options: {
+        //     type: 'plain', // plain input number date ...
+        //   }
+        // },
       ],
     }
   },

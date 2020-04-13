@@ -7,6 +7,7 @@ export default ({
   text = {},
   onChange, onRemove, onOptionsChange,
   onIndexChange,
+  headerField,
 }) => {
   const [editIndex, setEditIndex] = useState(-1);
 
@@ -17,6 +18,7 @@ export default ({
       setEditIndex(i);
     }
   }
+
   return items.map((item, i) => {
     return <div key={i}>
       <Item
@@ -26,6 +28,7 @@ export default ({
         editId={editIndex}
         index={i}
         disabled={disabled}
+        optionsField={headerField}
         onClick={handleClick}
         onChange={onChange}
         onRemove={onRemove}

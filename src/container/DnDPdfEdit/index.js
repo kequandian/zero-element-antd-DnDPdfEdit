@@ -18,9 +18,8 @@ import { Flex } from 'layout-flex';
 import global from 'zero-element-global/lib/global';
 
 import ComponentPanel from './ComponentPanel';
-import Fields from './Fields';
 import EchoPanel from './EchoPanel';
-import AttributesPanel from '../DnDFormEdit/AttributesPanel';
+import AttributesPanel from './AttributesPanel';
 
 import DnDContext from './utils/context';
 import handleState from './utils/dispatchState';
@@ -58,10 +57,12 @@ function DndFormEdit(props) {
   );
   const {
     fields,
+    tableFields,
     config, copyList, layoutType,
     spinning, spinningTip,
     headerField,
   } = state;
+
   const { API, path } = props.config;
   const context = useContext(PageContext);
   const { namespace } = context;
@@ -96,10 +97,15 @@ function DndFormEdit(props) {
           if (code === 200) {
             originFields.current = data.fields;
             if (originConfig) {
+              const jsonConfig = JSON.parse(originConfig);
               dispatch({
                 type: 'initConfig',
-                payload: data,
+                payload: {
+                  ...data,
+                  originConfig: jsonConfig,
+                },
               });
+              setInitId(jsonConfig.finalId, jsonConfig.fieldCount);
             }
             if (apiField) {
               dispatch({
@@ -109,7 +115,6 @@ function DndFormEdit(props) {
                 },
               });
             }
-            setInitId(originConfig.finalId, originConfig.fieldCount);
           }
         })
         .finally(_ => {
@@ -137,7 +142,11 @@ function DndFormEdit(props) {
 
     const submitData = {
       templateContent: JSON.stringify(data),
-      originConfig: JSON.stringify(config),
+      originConfig: JSON.stringify({
+        ...config,
+        finalId: assigned,
+        fieldCount: fieldCount,
+      }),
     };
 
 
@@ -214,6 +223,7 @@ function DndFormEdit(props) {
           current={state.current}
           dispatch={dispatch}
           fields={fields}
+          tableFields={tableFields}
           API={API}
           headerField={headerField}
         />
