@@ -3,6 +3,7 @@ import Canvas from './Canvas';
 import Grid from './Grid';
 import LTB from './LTB';
 
+import Text from './Text';
 import Plain from './Plain';
 import Group from './Group';
 import Checkbox from './Checkbox';
@@ -16,6 +17,7 @@ const typeMap = {
   Canvas,
   Grid,
   LTB,
+  Text,
   Plain,
   Group,
   Checkbox,

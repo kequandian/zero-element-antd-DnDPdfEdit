@@ -133,7 +133,7 @@ function DndFormEdit(props) {
   });
 
   function handleSave() {
-    const [data, fields] = formatToConfig(config, state.name, {
+    const [data] = formatToConfig(config, state.name, {
       layoutType,
     });
     const method = API.updateAPI ?

@@ -2,9 +2,7 @@
 export default function formatToConfig(cfg, formName) {
   const { items = [] } = cfg;
 
-  const fields = [].concat(...items.map(row => row.items));
-
-  const filterFields = fields.filter(field => field);
+  const filterFields = items.filter(field => field);
 
   const config = {
     flows: [],
@@ -12,23 +10,24 @@ export default function formatToConfig(cfg, formName) {
       pageName: 'A4',
       margin: '40',
     },
-    definitions: {},
-    // name: formName || '打印模板',
   }
 
   filterFields.forEach(field => {
-    const { type, options } = field;
     config.flows.push(
-      formatType(type, options)
+      formatType(field)
     );
   })
 
-  return [config, fields];
+  return [config];
 }
 
-function formatType(type, options) {
+function formatType(options) {
+  const { type } = options;
+
   const map = {
-    Table: fTable
+    Table: fTable,
+    Grid: fGrid,
+    Text: fText,
   };
   return (map[type] || fUndefined)(options);
 }
@@ -36,8 +35,39 @@ function formatType(type, options) {
 function fUndefined() {
   return {};
 }
-function fTable(options) {
-  const { table = [] } = options;
+
+/**
+ * 返回数组内的比例
+ * e.g.
+ * [16, 8] => [2, 1]
+ * @param {array} arr 
+ * @returns {array}
+ */
+function computeScale(arr) {
+  const min = Math.min(...arr);
+  return arr.map(i => ~~(i / min));
+}
+
+function fGrid(opt) {
+  const { value = [], items = [] } = opt;
+  const config = {
+    name: 'linear',
+    columnWidths: computeScale(value),
+    elements: [],
+  };
+
+  items.forEach(field => {
+    config.elements.push(
+      formatType(field)
+    );
+  });
+
+  return config;
+}
+
+function fTable(opt) {
+  const { options } = opt;
+  const { field, table = [] } = options;
   const config = {
     name: 'table',
     columnWidths: [],
@@ -45,6 +75,7 @@ function fTable(options) {
     columnKeyBindings: [],
     rowHeight: 50,
     headerHeight: 40,
+    data: '${' + field.value + '}',
   };
 
   table.forEach(f => {
@@ -56,6 +87,23 @@ function fTable(options) {
   });
 
   config.columnWidths = new Array(config.columnKeyBindings.length).fill(1);
+
+  return config;
+}
+
+function fText(opt) {
+  const { options } = opt;
+  const { field, base, style } = options;
+
+  const config = {
+    name: 'text',
+    data: base.data.value,
+    height: style.height.value,
+  };
+
+  if (!base.data.value) {
+    config.data = '${' + field.value + '}';
+  }
 
   return config;
 }
