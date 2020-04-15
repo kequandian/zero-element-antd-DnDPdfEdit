@@ -1,6 +1,7 @@
 import React from 'react';
 import LabelInput from './LabelComponents/LabelInput';
 import LabelNumber from './LabelComponents/LabelNumber';
+import LabelArray from './LabelComponents/LabelArray';
 import LabelRadio from './LabelComponents/LabelRadio';
 import SelectSQL from './LabelComponents/SelectSQL';
 import SelectTable from './LabelComponents/SelectTable';
@@ -12,6 +13,7 @@ import SaveData from './LabelComponents/SaveData';
 const labelSet = {
   'input': LabelInput,
   'number': LabelNumber,
+  'array': LabelArray,
   'radio': LabelRadio,
   'selectSQL': SelectSQL,
   'selectTable': SelectTable,

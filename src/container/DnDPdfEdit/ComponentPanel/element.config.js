@@ -17,32 +17,35 @@ export default [
       },
     },
   },
-  // {
-  //   title: 'content', type: 'Content', options: {
-  //     field: {},
-  //     base: {
-  //       name: {
-  //         label: 'content',
-  //       },
-  //       columnWidths: {
-  //         label: 'columnWidths',
-  //         value: [1, 2],
-  //       },
-  //       title: {
-  //         label: 'title',
-  //         value: [1, 2],
-  //       },
-  //       data: {
-  //         label: 'data',
-  //         value: [1, 2],
-  //       },
-  //       height: {
-  //         label: '高度',
-  //         value: 25,
-  //       },
-  //     },
-  //   },
-  // },
+  {
+    title: '信息栏', type: 'Content', options: {
+      field: {},
+      base: {
+        columnWidths: {
+          label: 'columnWidths',
+          type: 'array',
+          value: '1,2',
+        },
+        title: {
+          label: 'title',
+          type: 'array',
+          value: '标题1,标题2',
+        },
+        data: {
+          label: 'data',
+          type: 'array',
+          value: '内容1,内容2',
+        },
+      },
+      style: {
+        height: {
+          label: '高度',
+          type: 'number',
+          value: 44,
+        },
+      },
+    },
+  },
   {
     title: '表格', type: 'Table', options: {
       field: {},

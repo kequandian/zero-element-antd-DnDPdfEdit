@@ -28,6 +28,7 @@ function formatType(options) {
     Table: fTable,
     Grid: fGrid,
     Text: fText,
+    Content: fContent,
   };
   return (map[type] || fUndefined)(options);
 }
@@ -98,6 +99,27 @@ function fText(opt) {
   const config = {
     name: 'text',
     data: base.data.value,
+    height: style.height.value,
+  };
+
+  if (!base.data.value) {
+    config.data = '${' + field.value + '}';
+  }
+
+  return config;
+}
+
+function fContent(opt) {
+  const { options } = opt;
+  const { field, base, style } = options;
+  const { columnWidths, title, data } = base;
+
+  const config = {
+    name: 'content',
+    data: base.data.value,
+    columnWidths: columnWidths.value.split(','),
+    title: title.value.split(','),
+    data: data.value.split(','),
     height: style.height.value,
   };
 
