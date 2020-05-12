@@ -6,10 +6,6 @@ export default function formatToConfig(cfg, formName) {
 
   const config = {
     flows: [],
-    page: {
-      pageName: 'A4',
-      margin: '40',
-    },
   }
 
   filterFields.forEach(field => {
@@ -28,6 +24,9 @@ function formatType(options) {
     Table: fTable,
     Grid: fGrid,
     Text: fText,
+    Barcode: fBarcode,
+    Image: fImage,
+    Rectangle: fRectangle,
     Content: fContent,
   };
   return (map[type] || fUndefined)(options);
@@ -80,10 +79,12 @@ function fTable(opt) {
   };
 
   table.forEach(f => {
-    const { label, value } = f;
+    const { label, value, columnWidth, options } = f;
     config.columnKeyBindings.push({
       key: value,
-      column: value,
+      column: label,
+      columnWidth,
+      visible: options.visible,
     });
   });
 
@@ -126,6 +127,45 @@ function fContent(opt) {
   if (!base.data.value) {
     config.data = '${' + field.value + '}';
   }
+
+  return config;
+}
+
+function fBarcode(opt) {
+  const { options } = opt;
+  const { base, style } = options;
+
+  const config = {
+    name: 'barCode',
+    data: base.value.value,
+  };
+
+  return config;
+}
+function fImage(opt) {
+  const { options } = opt;
+  const { base, style } = options;
+
+  const config = {
+    name: 'image',
+    url: base.value.value,
+    width: style.width.value,
+    height: style.height.value,
+  };
+
+  return config;
+}
+
+function fRectangle(opt) {
+  const { options } = opt;
+  const { style } = options;
+
+  const config = {
+    name: 'rectangle',
+    color: style.backgroundColor.value,
+    width: style.width.value,
+    height: style.height.value,
+  };
 
   return config;
 }

@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import Render from './Layout';
 
 export default function Grid(props) {
-  const { config, dispatch } = props;
+  const { config, dispatch, state } = props;
   const { value, items } = config;
 
   return <Row>
@@ -24,6 +24,7 @@ export default function Grid(props) {
               itemCfg={itemCfg}
               config={config}
               dispatch={dispatch}
+              state={state}
             />
           )}
       </Col>

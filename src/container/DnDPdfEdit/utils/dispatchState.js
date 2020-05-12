@@ -21,14 +21,13 @@ export default function handleState(state, { type, payload = {} }) {
       }
     },
     initConfig() {
-      const { name, originConfig, headerField, apiField, apiList } = payload;
+      const { name, headerField, apiField, apiList } = payload;
 
       return {
         ...state,
         name: name,
-        config: originConfig,
-        fields: fotmatValue(apiField, v => v.split(',').map(f => f.field || f), []),  // 可用的普通后端字段, 如 name, sex, address
-        tableFields: fotmatValue(apiList, v => v.split(',').map(f => f.field || f), []),  // 可用的普通后端字段, 如 name, sex, address
+        fields: fotmatValue(apiField, v => v.split(',').map(f => f.field || f), []),  // 可用的后端字段, 如 name, sex, address
+        tableFields: fotmatValue(apiList, v => v.split(',').map(f => f.field || f), []),  // table 可用的后端字段, 如 recoreds, items
         headerField: fotmatValue(headerField, v => v.split(','), undefined),
       }
     },

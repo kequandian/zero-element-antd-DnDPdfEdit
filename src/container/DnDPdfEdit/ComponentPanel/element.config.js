@@ -51,7 +51,6 @@ export default [
       field: {},
       base: {
       },
-      expect: {},
       pdf: true,
       table: [
         // {
@@ -110,7 +109,6 @@ export default [
   //         value: '0px 0px 0px 0px',
   //       },
   //     },
-  //     expect: {},
   //   }
   // },
   // {
@@ -131,7 +129,6 @@ export default [
   //         value: undefined,
   //       },
   //     },
-  //     expect: {},
   //   }
   // },
   // {
@@ -156,7 +153,6 @@ export default [
   //         value: undefined,
   //       },
   //     },
-  //     expect: {},
   //   }
   // },
   // {
@@ -168,7 +164,6 @@ export default [
   //         value: '分组',
   //       },
   //     },
-  //     expect: {},
   //   }
   // },
   // {
@@ -180,31 +175,72 @@ export default [
   //         value: '二维码值',
   //       },
   //     },
-  //     expect: {},
   //   }
   // },
-  // {
-  //   title: '条形码', type: 'Barcode', options: {
-  //     field: {},
-  //     base: {
-  //       value: {
-  //         label: '条形码',
-  //         value: '条形码值',
-  //       },
-  //     },
-  //     expect: {},
-  //   }
-  // },
-  // {
-  //   title: '图片', type: 'Image', options: {
-  //     field: {},
-  //     base: {
-  //       value: {
-  //         label: '图片URL',
-  //         value: '图片',
-  //       },
-  //     },
-  //     expect: {},
-  //   }
-  // },
+  {
+    title: '条形码', type: 'Barcode', options: {
+      field: {},
+      base: {
+        value: {
+          label: '条形码',
+          value: '条形码值',
+        },
+      },
+    }
+  },
+  {
+    title: '图片', type: 'Image', options: {
+      field: {},
+      base: {
+        value: {
+          label: '图片URL',
+          value: '图片',
+        },
+      },
+      style: {
+        width: {
+          label: '宽度',
+          type: 'number',
+          value: 200,
+        },
+        height: {
+          label: '高度',
+          type: 'number',
+          value: 200,
+        },
+      },
+    }
+  },
+  {
+    title: '矩形', type: 'Rectangle', options: {
+      field: {},
+      base: {
+      },
+      style: {
+        width: {
+          label: '宽度',
+          type: 'number',
+          value: 842,
+        },
+        height: {
+          label: '高度',
+          type: 'number',
+          value: 70,
+        },
+        backgroundColor: {
+          label: '底色',
+          type: 'radio',
+          options: [
+            { label: '黑', value: 'BLACK' },
+            { label: '白', value: 'WHITE' },
+            { label: '红', value: 'RED' },
+            { label: '黄', value: 'YELLOW' },
+            { label: '蓝', value: 'BLUE' },
+            { label: '绿', value: 'GREEN' },
+          ],
+          value: 70,
+        },
+      },
+    }
+  },
 ];

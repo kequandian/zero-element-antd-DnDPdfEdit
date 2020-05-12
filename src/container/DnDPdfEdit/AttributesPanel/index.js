@@ -7,7 +7,6 @@ import { renderBaseOptions, renderStyleOptions, renderAdvancedOptions } from './
 
 import '../index.css';
 import Checkbox from './components/Checkbox';
-import Expect from './components/Expect';
 
 const { Option } = Select;
 
@@ -127,10 +126,11 @@ export default ({ current, dispatch, fields, tableFields, API, headerField }) =>
     table[i].options[type] = value;
     onSave();
   }
-  function handleTableDel(i) {
-    table.splice(i, 1);
+  function handleVisible(i) {
+    table[i].options.visible = !table[i].options.visible;
     onSave();
   }
+
   function handleRulesChange(key, value) {
     rules[key].value = value;
     onSave();
@@ -206,15 +206,6 @@ export default ({ current, dispatch, fields, tableFields, API, headerField }) =>
         <div className="ZEleA-DnDFormEdit-title">配置</div>
         {renderBaseOptions(config, handleConfigChange)}
       </> : null}
-    {expect ?
-      <>
-        <div className="ZEleA-DnDFormEdit-title">预期</div>
-        <Expect
-          data={expect}
-          onChange={handleExpectChange}
-        />
-      </>
-      : null}
     {advanced ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">高级</div>
@@ -230,15 +221,16 @@ export default ({ current, dispatch, fields, tableFields, API, headerField }) =>
     {table ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">显示字段</div>
-        <Button type="dashed" icon="plus"
+        {/* <Button type="dashed" icon="plus"
           onClick={handleTableAdd.bind(null, pdf)}>
           添加字段
         </Button>
-        <br /><br />
+        <br /><br /> */}
         {renderItemsOptions(table,
           {
             onChange: handleTableChange,
-            onRemove: handleTableDel,
+            // onRemove: handleTableDel,
+            onVisible: handleVisible,
             onOptionsChange: handleTableOptionsChange,
             onOptionsChange: handleTableOptionsChange,
             onIndexChange: handleTableIndexChange,

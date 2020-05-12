@@ -5,7 +5,7 @@ export default ({
   items, valueField,
   disabled,
   text = {},
-  onChange, onRemove, onOptionsChange,
+  onChange, onRemove, onOptionsChange, onVisible,
   onIndexChange,
   headerField,
 }) => {
@@ -28,10 +28,11 @@ export default ({
         editId={editIndex}
         index={i}
         disabled={disabled}
-        optionsField={headerField}
+        fields={headerField}
         onClick={handleClick}
         onChange={onChange}
         onRemove={onRemove}
+        onVisible={onVisible}
         onOptionsChange={onOptionsChange}
         onIndexChange={onIndexChange}
       />

@@ -3,7 +3,7 @@ import typeMap from '../type';
 import RowTool from './components/RowTool';
 
 export default function Render(props) {
-  const { config, dispatch } = props;
+  const { config, dispatch, state } = props;
   const { type, tips, items, options } = config;
 
   const Component = match(type);
@@ -12,7 +12,7 @@ export default function Render(props) {
       <Component {...props}>
         {items.map(config => (
           <Fragment key={config.id}>
-            <Render config={config} dispatch={dispatch} />
+            <Render config={config} dispatch={dispatch} state={state} />
           </Fragment>
         ))}
       </Component>

@@ -4,8 +4,8 @@ import OnlyElemContainer from './OnlyElemContainer';
 import Element from './Element';
 
 export default (props) => {
-  const { itemCfg = {}, config, index, dispatch } = props;
-  const { items } = config;
+  const { itemCfg = {}, config, index, dispatch, state } = props;
+  const { items } = config;  
 
   function handleRemove(i, e) {
     e && e.stopPropagation && e.stopPropagation();
@@ -54,6 +54,8 @@ export default (props) => {
           <Element
             index={index}
             data={itemCfg}
+            state={state}
+            dispatch={dispatch}
             onRemove={handleRemove}
             onEdit={handleActiveEdit}
             onCopy={handleCopyElement}

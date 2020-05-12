@@ -3,8 +3,7 @@ import Render from '../utils/Render';
 import '../index.css';
 
 export default (props) => {
-  const { layoutType, ...rest } = props;
-  return <div className={`ZEleA-DnDFormEdit-EchoPanel ZEleA-Form-${layoutType}`}>
-    <Render {...rest} />
+  return <div className={`ZEleA-DnDFormEdit-EchoPanel ZEleA-Form-horizontal`}>
+    <Render {...props} />
   </div>
 }

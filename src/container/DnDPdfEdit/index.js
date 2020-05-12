@@ -27,6 +27,8 @@ import formatToConfig from './utils/format';
 import { assigned, fieldCount, setInitId } from './utils/Item';
 
 import Panel from 'zero-element-antd/lib/components/Panel';
+import Preview from './compoments/Preview';
+import PageConfig from './compoments/PageConfig';
 
 const { FlexItem } = Flex;
 
@@ -41,9 +43,13 @@ const initState = {
     items: [],
   },
   copyList: [],
-  layoutType: 'horizontal',
   spinning: false,
   spinningTip: '',
+  page: {
+    pageName: 'A4',
+    rotate: true,
+    margin: 40,
+  },
 };
 
 function DndFormEdit(props) {
@@ -58,7 +64,8 @@ function DndFormEdit(props) {
   const {
     fields,
     tableFields,
-    config, copyList, layoutType,
+    config, copyList,
+    page,
     spinning, spinningTip,
     headerField,
   } = state;
@@ -93,28 +100,25 @@ function DndFormEdit(props) {
 
       formProps.handle.onGetOne({})
         .then(({ code, data }) => {
-          const { originConfig, apiField, headerField, templateContent } = data;
+          const { name, originConfig, apiField, headerField, templateContent } = data;
           if (code === 200) {
             originFields.current = data.fields;
             if (originConfig) {
               const jsonConfig = JSON.parse(originConfig);
               dispatch({
-                type: 'initConfig',
+                type: 'save',
                 payload: {
-                  ...data,
-                  originConfig: jsonConfig,
+                  config: jsonConfig,
                 },
               });
               setInitId(jsonConfig.finalId, jsonConfig.fieldCount);
             }
-            if (apiField) {
-              dispatch({
-                type: 'save',
-                payload: {
-                  fields: apiField.split(','),
-                },
-              });
-            }
+            dispatch({
+              type: 'initConfig',
+              payload: {
+                ...data,
+              },
+            });
           }
         })
         .finally(_ => {
@@ -132,16 +136,14 @@ function DndFormEdit(props) {
     }
   });
 
-  function handleSave() {
-    const [data] = formatToConfig(config, state.name, {
-      layoutType,
-    });
-    const method = API.updateAPI ?
-      formProps.handle.onUpdateForm
-      : formProps.handle.onCreateForm;
+  function handleGetSubmitData() {
+    const [data] = formatToConfig(config, state.name);
 
     const submitData = {
-      templateContent: JSON.stringify(data),
+      templateContent: JSON.stringify({
+        ...data,
+        page: page,
+      }),
       originConfig: JSON.stringify({
         ...config,
         finalId: assigned,
@@ -149,6 +151,15 @@ function DndFormEdit(props) {
       }),
     };
 
+    return submitData;
+  }
+
+  function handleSave() {
+    const method = API.updateAPI ?
+      formProps.handle.onUpdateForm
+      : formProps.handle.onCreateForm;
+
+    const submitData = handleGetSubmitData();
 
     if (onSubmit) {
       onSubmit(submitData);
@@ -203,19 +214,27 @@ function DndFormEdit(props) {
     <Flex>
       <FlexItem flex={1}>
         <Spin spinning={spinning} tip={spinningTip}>
+          <Preview
+            name={state.name}
+            onGetData={handleGetSubmitData}
+            dispatch={dispatch}
+          />
+          <PageConfig
+            dispatch={dispatch}
+            page={page}
+          />
           {renderSubmitButton()}
           <Panel title="Pdf 画布">
             <EchoPanel
-              layoutType={layoutType}
               config={config}
               dispatch={dispatch}
+              state={state}
             />
           </Panel>
         </Spin>
       </FlexItem>
       <FlexItem style={{ width: '256px' }}>
         <ComponentPanel
-          layoutType={layoutType}
           dispatch={dispatch}
           copyList={copyList}
         />

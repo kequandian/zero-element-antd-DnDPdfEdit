@@ -7,7 +7,7 @@ import DnDContext from '../../utils/context';
 
 import '../../index.css';
 
-export default ({ index, data, onRemove, onEdit, onCopy }) => {
+export default ({ index, data, onRemove, onEdit, onCopy, state, dispatch }) => {
   const { current = {} } = useContext(DnDContext);
   const className = classNames({
     'ZEleA-DnDFormEdit-row': true,
@@ -16,7 +16,7 @@ export default ({ index, data, onRemove, onEdit, onCopy }) => {
   return <div>
     <ContextMenuTrigger id={`element_${data.id}`}>
       <div className={className} onClick={onEdit.bind(null, index)}>
-        <Render config={data} />
+        <Render config={data} state={state} dispatch={dispatch} />
       </div>
     </ContextMenuTrigger>
     <ContextMenu

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Input, Icon, Select } from 'antd';
+import { Card, Input, Icon, Select, InputNumber } from 'antd';
 import Options from './Options';
 import './index.css';
 
@@ -17,7 +17,7 @@ export default function ItemEdit(props) {
     editId,
     optionsField = [],
     onClick,
-    onChange, onRemove, onOptionsChange,
+    onChange, onRemove, onOptionsChange, onVisible,
     onIndexChange,
   } = props;
   const edit = editId === index;
@@ -34,6 +34,14 @@ export default function ItemEdit(props) {
 
   function handleChange(value) {
     onChange(index, valueField, {
+      target: {
+        value,
+      }
+    })
+  }
+
+  function handleWidthChange(value) {
+    onChange(index, 'columnWidth', {
       target: {
         value,
       }
@@ -58,11 +66,20 @@ export default function ItemEdit(props) {
         className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
         onClick={handleMoveDown}
       />
-      <Icon
-        type="delete"
-        className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
-        onClick={onRemove.bind(null, index)}
-      />
+      {onVisible ? (
+        <Icon
+          type={options.visible ? 'eye' : 'eye-invisible'}
+          className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
+          onClick={onVisible.bind(null, index)}
+        />
+      ) : null}
+      {onRemove ? (
+        <Icon
+          type="delete"
+          className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
+          onClick={onRemove.bind(null, index)}
+        />
+      ) : null}
       <Icon
         type={edit ? 'up' : 'down'}
         className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
@@ -76,7 +93,12 @@ export default function ItemEdit(props) {
     <span>{tLabel}: </span>
     <Input value={label} onChange={onChange.bind(null, index, 'label')} />
     <span>{tValue}: </span>
-    <Select
+    <Input value={props[valueField]} readOnly />
+    <span>列宽: </span>
+    <div>
+      <InputNumber value={props.columnWidth} onChange={handleWidthChange} min={1} />
+    </div>
+    {/* <Select
       style={{ width: 182 }}
       value={props[valueField]}
       onChange={handleChange}
@@ -84,7 +106,7 @@ export default function ItemEdit(props) {
       {optionsField.map(key => {
         return <Option key={key} value={key}>{key}</Option>
       })}
-    </Select>
+    </Select> */}
     <Options
       index={index}
       data={options}

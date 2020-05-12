@@ -5,6 +5,7 @@ import LTB from './LTB';
 
 import Text from './Text';
 import Plain from './Plain';
+import Rectangle from './Rectangle';
 import Group from './Group';
 import Checkbox from './Checkbox';
 import InputUnderline from './InputUnderline';
@@ -20,6 +21,7 @@ const typeMap = {
   LTB,
   Text,
   Plain,
+  Rectangle,
   Group,
   Checkbox,
   InputUnderline,
