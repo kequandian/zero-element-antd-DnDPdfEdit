@@ -21,7 +21,7 @@ export default function handleState(state, { type, payload = {} }) {
       }
     },
     initConfig() {
-      const { name, headerField, apiField, apiList } = payload;
+      const { name, headerField, apiField, apiList, templateContent } = payload;
 
       return {
         ...state,
@@ -29,6 +29,7 @@ export default function handleState(state, { type, payload = {} }) {
         fields: fotmatValue(apiField, v => v.split(',').map(f => f.field || f), []),  // 可用的后端字段, 如 name, sex, address
         tableFields: fotmatValue(apiList, v => v.split(',').map(f => f.field || f), []),  // table 可用的后端字段, 如 recoreds, items
         headerField: fotmatValue(headerField, v => v.split(','), undefined),
+        page: JSON.parse(templateContent).page,
       }
     },
     addLayout() {
