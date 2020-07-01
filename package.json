@@ -23,7 +23,7 @@
     "react-dom": "^16.8.6",
     "react-final-form": "^6.0.1",
     "zero-element": "^1.0.0-beta.9",
-    "zero-element-antd": "github:kequandian/zero-element-antd"
+    "zero-element-antd": "github:kequandian/zero-element-antd#0.x-Beta"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
