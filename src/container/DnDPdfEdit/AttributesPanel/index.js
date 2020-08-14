@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { Drawer, Button, Select } from 'antd';
 import { toNumber } from 'zero-element-antd/lib/utils/tool';
-import ItemEdit from './components/ItemEdit';
 import { arrayItemMove } from 'zero-element-antd/lib/utils/tool';
-import { renderBaseOptions, renderStyleOptions, renderAdvancedOptions } from './components/render';
+import {
+  PlusOutlined,
+} from '@ant-design/icons';
 
+import ItemEdit from './components/ItemEdit';
+import { renderBaseOptions, renderStyleOptions, renderAdvancedOptions } from './components/render';
 import '../index.css';
 import Checkbox from './components/Checkbox';
 
@@ -189,7 +192,7 @@ export default ({ current, dispatch, fields, tableFields, API, headerField }) =>
     {items ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">子项</div>
-        <Button type="dashed" icon="plus"
+        <Button type="dashed" icon={<PlusOutlined />}
           onClick={handleItemAdd}>
           添加子项
         </Button>
@@ -221,7 +224,7 @@ export default ({ current, dispatch, fields, tableFields, API, headerField }) =>
     {table ? (
       <>
         <div className="ZEleA-DnDFormEdit-title">显示字段</div>
-        {/* <Button type="dashed" icon="plus"
+        {/* <Button type="dashed" icon={<PlusOutlined />}
           onClick={handleTableAdd.bind(null, pdf)}>
           添加字段
         </Button>

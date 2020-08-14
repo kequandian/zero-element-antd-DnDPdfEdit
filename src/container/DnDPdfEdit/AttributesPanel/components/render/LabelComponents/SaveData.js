@@ -1,7 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
-import ItemEdit from '../../ItemEdit';
 import { arrayItemMove } from 'zero-element-antd/lib/utils/tool';
 import { Button } from 'antd';
+import {
+  PlusOutlined,
+} from '@ant-design/icons';
+import ItemEdit from '../../ItemEdit';
 
 export default function SaveData(props) {
   const {
@@ -66,7 +69,7 @@ export default function SaveData(props) {
 
   return <>
     <div>{label}</div>
-    <Button icon="plus" onClick={handleAppend}>添加额外保存数据</Button>
+    <Button icon={<PlusOutlined />} onClick={handleAppend}>添加额外保存数据</Button>
     <br /><br />
     <ItemEdit
       text={{

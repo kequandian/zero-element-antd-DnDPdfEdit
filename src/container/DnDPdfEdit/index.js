@@ -4,15 +4,14 @@
  * jsbarcode
  */
 
-import React, { useReducer, useContext, useRef } from 'react';
-import { Button, Spin, Input, Card, message } from 'antd';
+import React, { useReducer, useRef } from 'react';
+import { Button, Spin, message } from 'antd';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { formatAPI } from 'zero-element/lib/utils/format';
 import { useDidMount } from 'zero-element/lib/utils/hooks/lifeCycle';
 import useBaseForm from 'zero-element/lib/helper/form/useBaseForm';
-import PageContext from 'zero-element/lib/context/PageContext';
 import { Flex } from 'layout-flex';
 
 import global from 'zero-element/lib/config/global';
@@ -53,7 +52,7 @@ const initState = {
 };
 
 function DndFormEdit(props) {
-  const { onSubmit, onGetFormRef, initData } = props;
+  const { namespace, onSubmit, onGetFormRef, initData } = props;
   const formRef = useRef({});
 
   const [state, dispatch] = useReducer(
@@ -71,8 +70,6 @@ function DndFormEdit(props) {
   } = state;
 
   const { API, path } = props.config;
-  const context = useContext(PageContext);
-  const { namespace } = context;
   const formProps = useBaseForm({
     namespace,
     modelPath: 'formData',

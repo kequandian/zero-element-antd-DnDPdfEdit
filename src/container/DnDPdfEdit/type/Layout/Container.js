@@ -1,6 +1,9 @@
 import React from 'react';
-import { Icon, Menu } from 'antd';
+import { Menu } from 'antd';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+import {
+  SnippetsOutlined,
+} from '@ant-design/icons';
 import ElementContainer from '../../wrapped/ElementContainer';
 import LayoutContainer from '../../wrapped/LayoutContainer';
 
@@ -25,7 +28,7 @@ export default ({ layoutId, index, onPaste }) => {
       <MenuItem>
         <Menu selectedKeys={[]}>
           <Menu.Item onClick={onPaste.bind(null, index)}>
-            <Icon type="snippets" className="ZEleA-DnDFormEdit-primary" />粘贴元素
+            <SnippetsOutlined className="ZEleA-DnDFormEdit-primary" />粘贴元素
           </Menu.Item>
         </Menu>
       </MenuItem>

@@ -1,6 +1,16 @@
 import React from 'react';
-import { Card, Input, Icon, Select, InputNumber } from 'antd';
+import { Card, Input, Select, InputNumber } from 'antd';
+import {
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  DeleteOutlined,
+  UpOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
 import Options from './Options';
+
 import './index.css';
 
 const { Option } = Select;
@@ -56,35 +66,39 @@ export default function ItemEdit(props) {
       {label}
     </div>}
     extra={<div>
-      <Icon
-        type="arrow-up"
+      <ArrowUpOutlined
         className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
         onClick={handleMoveUp}
       />
-      <Icon
-        type="arrow-down"
+      <ArrowDownOutlined
         className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
         onClick={handleMoveDown}
       />
       {onVisible ? (
-        <Icon
-          type={options.visible ? 'eye' : 'eye-invisible'}
-          className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
-          onClick={onVisible.bind(null, index)}
-        />
+        options.visible ?
+          <EyeOutlined
+            className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
+            onClick={onVisible.bind(null, index)}
+          />
+          : <EyeInvisibleOutlined
+            className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
+            onClick={onVisible.bind(null, index)}
+          />
       ) : null}
       {onRemove ? (
-        <Icon
-          type="delete"
+        <DeleteOutlined
           className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-delete"
           onClick={onRemove.bind(null, index)}
         />
       ) : null}
-      <Icon
-        type={edit ? 'up' : 'down'}
+      {edit ? <UpOutlined
         className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
         onClick={handleClick}
       />
+        : <DownOutlined
+          className="ZEleA-DnDFormEdit-ItemEdit-icon ZEleA-DnDFormEdit-ItemEdit-icon-edit"
+          onClick={handleClick}
+        />}
     </div>}
     bodyStyle={{
       display: edit ? 'block' : 'none',

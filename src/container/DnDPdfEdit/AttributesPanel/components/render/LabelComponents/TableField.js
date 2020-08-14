@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
-import ItemEdit from '../../ItemEdit';
 import { arrayItemMove } from 'zero-element-antd/lib/utils/tool';
 import { Button } from 'antd';
+import {
+  PlusOutlined,
+} from '@ant-design/icons';
+import ItemEdit from '../../ItemEdit';
 
 export default function TableField(props) {
   const { field, label, value, handle } = props;
@@ -43,7 +46,7 @@ export default function TableField(props) {
 
   return <>
     <div>{label}</div>
-    <Button icon="plus" onClick={handleAppend}>添加子项</Button>
+    <Button icon={PlusOutlined} onClick={handleAppend}>添加子项</Button>
     <br /><br />
     <ItemEdit
       items={value}
