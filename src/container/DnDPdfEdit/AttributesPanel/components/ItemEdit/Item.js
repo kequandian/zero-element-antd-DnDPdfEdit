@@ -9,6 +9,7 @@ import {
   UpOutlined,
   DownOutlined,
 } from '@ant-design/icons';
+import MapModal from './MapModal';
 import Options from './Options';
 
 import './index.css';
@@ -52,6 +53,14 @@ export default function ItemEdit(props) {
 
   function handleWidthChange(value) {
     onChange(index, 'columnWidth', {
+      target: {
+        value,
+      }
+    })
+  }
+
+  function handleMapChange(value) {
+    onChange(index, 'map', {
       target: {
         value,
       }
@@ -111,6 +120,13 @@ export default function ItemEdit(props) {
     <span>列宽: </span>
     <div>
       <InputNumber value={props.columnWidth} onChange={handleWidthChange} min={1} />
+    </div>
+    <span>数据映射: </span>
+    <div>
+      <MapModal
+        value={props.map}
+        onChange={handleMapChange}
+      />
     </div>
     {/* <Select
       style={{ width: 182 }}

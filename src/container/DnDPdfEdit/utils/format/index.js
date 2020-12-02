@@ -73,22 +73,27 @@ function fTable(opt) {
     columnWidths: [],
     columnsLayout: [],
     columnKeyBindings: [],
+    converts: {},
     rowHeight: 50,
     headerHeight: 40,
     data: '${' + field.value + '}',
   };
 
   table.forEach(f => {
-    const { label, value, columnWidth, options } = f;
+    const { label, value, columnWidth, map, options } = f;
+    config.columnWidths.push(columnWidth);
+    if (Object.keys(map).length) {
+      config.converts[value] = map;
+    }
     config.columnKeyBindings.push({
       key: value,
       column: label,
-      columnWidth,
+      // columnWidth,
       visible: options.visible,
     });
   });
 
-  config.columnWidths = new Array(config.columnKeyBindings.length).fill(1);
+  // config.columnWidths = new Array(config.columnKeyBindings.length).fill(1);
 
   return config;
 }

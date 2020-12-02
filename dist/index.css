@@ -195,9 +195,11 @@
 }
 
 .ZEleA-DnDFormEdit-ItemEdit-icon-delete:hover {
-  color: #f5222d;
+  color : #f5222d;
+  cursor: pointer;
 }
 
 .ZEleA-DnDFormEdit-ItemEdit-icon-edit:hover {
-  color: #1890ff;
+  color : #1890ff;
+  cursor: pointer;
 }

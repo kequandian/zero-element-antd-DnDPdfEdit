@@ -18,6 +18,7 @@ export default function STable(props) {
           label: key,
           value: key,
           columnWidth: 1,
+          map: {},
           options: { type: 'plain', visible: true },
         })
       ))
